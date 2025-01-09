@@ -427,7 +427,6 @@
       const weatherInfo = document.getElementById("weather-info");
       const API_KEY = "b1fd6e14799699504191b6bdbcadfc35";
 
-      // https://api.openweathermap.org/data/2.5/weather?q=Pyay&appid=b1fd6e14799699504191b6bdbcadfc35&units=metric
       async function getWeatherByCity(city) {
         try {
           const response = await fetch(
@@ -485,13 +484,13 @@
         `;
 
         try {
-          // IP-API.com ကို အသုံးပြုခြင်း
+          // Using ipinfo.io with HTTPS
           const response = await fetch(
-            "http://ip-api.com/json/?fields=status,message,city"
+            "https://ipinfo.io/json?token=11f16b1c629012"
           );
           const data = await response.json();
 
-          if (data.status === "success" && data.city) {
+          if (data.city) {
             console.log("City found:", data.city);
             getWeatherByCity(data.city);
           } else {
@@ -500,8 +499,34 @@
           }
         } catch (error) {
           console.error("IP Geolocation Error:", error);
-          // Default city if IP geolocation fails
-          getWeatherByCity("Yangon");
+          // Try browser geolocation as backup
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              async (position) => {
+                try {
+                  const { latitude, longitude } = position.coords;
+                  const response = await fetch(
+                    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
+                  );
+                  const data = await response.json();
+                  if (response.ok) {
+                    getWeatherByCity(data.name);
+                  } else {
+                    getWeatherByCity("Yangon");
+                  }
+                } catch (error) {
+                  console.error("Reverse Geocoding Error:", error);
+                  getWeatherByCity("Yangon");
+                }
+              },
+              (error) => {
+                console.error("Geolocation Error:", error);
+                getWeatherByCity("Yangon");
+              }
+            );
+          } else {
+            getWeatherByCity("Yangon");
+          }
         }
       }
 
