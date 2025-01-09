@@ -140,6 +140,30 @@
         border-radius: 5px;
         cursor: pointer;
       }
+
+      /* Add these styles */
+      .progress-bar {
+        width: 100%;
+        height: 10px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        margin: 10px 0;
+        overflow: hidden;
+      }
+
+      .progress {
+        height: 100%;
+        width: 0;
+        background-color: #4caf50;
+        transition: width 5s linear;
+      }
+
+      .question-number {
+        font-size: 1.1rem;
+        color: #666;
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
     </style>
   </head>
 
@@ -276,9 +300,16 @@
     >
       <div id="quiz-container">
         <h1 class="my-4">ဉာဏ်စမ်းဂိမ်း</h1>
-        <div id="quiz"></div>
-        <!-- <button id="submit">Submit Answers</button> -->
-        <div id="result"></div>
+        <div id="start-screen" class="text-center">
+          <button id="start-btn" class="btn btn-primary btn-lg">စတင်မည်</button>
+        </div>
+        <div id="quiz-screen" style="display: none">
+          <div class="progress-bar">
+            <div class="progress"></div>
+          </div>
+          <div id="quiz"></div>
+          <div id="result"></div>
+        </div>
       </div>
     </div>
 
@@ -313,19 +344,48 @@
     <script>
       const quizData = [
         {
-          question: "What is the capital of France?",
-          options: ["Berlin", "Madrid", "Paris", "Rome"],
-          answer: "Paris",
+          question: "တိရ စ္ဆာန်မွေးမြူခြင်း၏ အဓိကရည်ရွယ်ချက် ကား အဘယ်နည်း။",
+          options: [
+            "စီးပွားဖြစ် မွေးမြူရေးလုပ်ငန်း အတွက် မွေးမြူရေး",
+            "တောင်သူလယ်သမားများအတွက် အလုပ်အကိုင်များ ပေးအပ်ခြင်း",
+            "မျိုးသုဉ်းလုနီးပါးမျိုးစိတ်များကို ကာကွယ်ခြင်း",
+            "စားနပ်ရိက္ခာဖူလုံမှုရှိစေရေး",
+          ],
+          answer: "စီးပွားဖြစ် မွေးမြူရေးလုပ်ငန်း အတွက် မွေးမြူရေး",
         },
         {
-          question: "What is the largest planet in our solar system?",
-          options: ["Mars", "Jupiter", "Venus", "Earth"],
-          answer: "Jupiter",
+          question:
+            "တိရစ္ဆာန်မွေးမြူခြင်းတွင် ဈေးကွက် ရရှိရေးပြဿနာများကို ဖြေရှင်း နည်းတစ်ခုကား အဘယ်နည်း။",
+          options: [
+            "မွေးမြူရေး တိရစ္ဆာန်ဦးရေ တိုးစေခြင်း။",
+            "ပိုမိုကောင်းမွန်သော လမ်းများနှင့် လမ်းပန်းဆက်သွယ်ရေးကွန်ရက်များ တည်ဆောက်ပါ",
+            "တိရစ္ဆာန်ကျန်းမာရေးစောင့်ရှောက် မှုကုန်ကျစရိတ်ကို လျှော့ချပါ",
+            "အသေးစားဈေးကွက်များ ကိုပိတ်ပါ",
+          ],
+          answer:
+            "ပိုမိုကောင်းမွန်သော လမ်းများနှင့် လမ်းပန်းဆက်သွယ်ရေးကွန်ရက်များ တည်ဆောက်ပါ",
         },
         {
-          question: "How many legs does a spider have?",
-          options: ["6", "8", "10", "4"],
-          answer: "8",
+          question:
+            "အခြေခံ မွေးမြူရေးသမား များ ရင်ဆိုင်နေရသော အဓိကပြဿနာမှာ အဘယ်နည်း",
+          options: [
+            "သင့်လျော်သော စားကျက်မြေမရှိခြင်း",
+            "အရင်းအမြစ်များ များပြား ခြင်း",
+            "မိုးအလွန်အကျွံရွာခြင်း",
+            "တိရစ္ဆာန်ရောဂါများ",
+          ],
+          answer: "သင့်လျော်သော စားကျက်မြေမရှိခြင်း",
+        },
+        {
+          question:
+            "အောက်ဖော်ပြပါများထဲမှ မည်သည့်အရာသည် ဒေသခံ ပြည်သူများအတွက် တိရစ္ဆာန် မွေးမြူမှု ပိုမိုကောင်းမွန် အောင် ကူညီပေးနိုင်မည်နည်း။",
+          options: [
+            "ရိုးရာနည်းများ",
+            "နည်းပညာအသစ်များ",
+            "မိုးအလွန်အကျွံရွာခြင်း",
+            "တိရစ္ဆာန်ရောဂါများ",
+          ],
+          answer: "နည်းပညာအသစ်များ",
         },
       ];
 
@@ -335,18 +395,52 @@
 
       let currentQuestion = 0;
       let score = 0;
+      let timer;
+      let isQuizStarted = false;
+
+      function startTimer() {
+        const progressBar = document.querySelector(".progress");
+        progressBar.style.width = "100%"; // Start at 100%
+
+        // Clear any existing timer
+        if (timer) clearTimeout(timer);
+
+        // Reset and animate to 0%
+        setTimeout(() => {
+          progressBar.style.width = "0%";
+        }, 50);
+
+        // Auto-submit after 5 seconds
+        timer = setTimeout(() => {
+          const options = document.querySelectorAll(".options li");
+          if (!options[0].classList.contains("disabled")) {
+            checkAnswer("timeout");
+          }
+        }, 5000);
+      }
 
       function loadQuiz() {
+        if (!isQuizStarted) return;
+
         const currentQuizData = quizData[currentQuestion];
-        quizContainer.innerHTML = `
-    <div class="question">${currentQuizData.question}</div>
-    <ul class="options">
-      ${currentQuizData.options.map((option) => `<li>${option}</li>`).join("")}
-    </ul>
-  `;
+        const quizDiv = document.getElementById("quiz");
+        quizDiv.innerHTML = `
+          <div class="question-number">မေးခွန်း ${currentQuestion + 1}/${
+          quizData.length
+        }</div>
+          <div class="question">${currentQuizData.question}</div>
+          <ul class="options">
+            ${currentQuizData.options
+              .map((option) => `<li>${option}</li>`)
+              .join("")}
+          </ul>
+        `;
       }
 
       function checkAnswer(selectedAnswer) {
+        // Clear the timer when answer is selected
+        if (timer) clearTimeout(timer);
+
         const currentQuizData = quizData[currentQuestion];
         const options = document.querySelectorAll(".options li");
         const correctAnswer = currentQuizData.answer;
@@ -374,11 +468,32 @@
           }, 1000);
         } else {
           currentQuestion++;
-          setTimeout(loadQuiz, 1000);
+          setTimeout(() => {
+            loadQuiz();
+            // Force progress bar reset
+            const progressBar = document.querySelector(".progress");
+            progressBar.style.transition = "none";
+            progressBar.style.width = "100%";
+
+            // Re-enable transition and start timer
+            setTimeout(() => {
+              progressBar.style.transition = "width 5s linear";
+              startTimer();
+            }, 50);
+          }, 1000);
         }
       }
 
-      loadQuiz();
+      // Add start button handler
+      document.getElementById("start-btn").addEventListener("click", startQuiz);
+
+      function startQuiz() {
+        isQuizStarted = true;
+        document.getElementById("start-screen").style.display = "none";
+        document.getElementById("quiz-screen").style.display = "block";
+        loadQuiz();
+        startTimer();
+      }
 
       quizContainer.addEventListener("click", (e) => {
         if (e.target.tagName === "LI") {
@@ -391,17 +506,44 @@
       });
 
       function showResults() {
-        quizContainer.innerHTML = `
-    <div class="question">Quiz Completed!</div>
-    <div id="result">သင်သည် ${quizData.length} မေးခွန်းတွင် ${score} မှတ် ရရှိပါသည်။</div>
-    <button onclick="resetQuiz()" class="mt-3">Try Again</button>
-  `;
+        document.getElementById("quiz-screen").innerHTML = `
+          <div class="question">Quiz Completed!</div>
+          <div id="result">သင်သည် ${quizData.length} မေးခွန်းတွင် ${score} မှတ် ရရှိပါသည်။</div>
+          <button onclick="resetQuiz()" class="btn btn-primary mt-3">ပြန်လည်စတင်မည်</button>
+        `;
       }
 
       function resetQuiz() {
         currentQuestion = 0;
         score = 0;
-        loadQuiz();
+        isQuizStarted = false;
+
+        // Reset the entire quiz container to its original state
+        document.getElementById("quiz-container").innerHTML = `
+          <h1 class="my-4">ဉာဏ်စမ်းဂိမ်း</h1>
+          <div id="start-screen" class="text-center">
+            <button id="start-btn" class="btn btn-primary btn-lg">စတင်မည်</button>
+          </div>
+          <div id="quiz-screen" style="display: none;">
+            <div class="progress-bar">
+              <div class="progress"></div>
+            </div>
+            <div id="quiz"></div>
+            <div id="result"></div>
+          </div>
+        `;
+
+        // Re-attach event listener to the new start button
+        document
+          .getElementById("start-btn")
+          .addEventListener("click", startQuiz);
+
+        // Re-attach click event for options
+        document.getElementById("quiz").addEventListener("click", (e) => {
+          if (e.target.tagName === "LI") {
+            checkAnswer(e.target.textContent);
+          }
+        });
       }
     </script>
 
