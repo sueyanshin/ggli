@@ -343,38 +343,39 @@
 
     <script>
       const weatherInfo = document.getElementById("weather-info");
-      const API_KEY = "b1fd6e14799699504191b6bdbcadfc35"; // OpenWeatherMap API key
+      const API_KEY = "b1fd6e14799699504191b6bdbcadfc35";
 
       async function getWeatherByCoords(lat, lon) {
         try {
           const response = await fetch(
             `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
           );
-          // fetch(
-          //   `https://api.openweathermap.org/data/2.5/forecast?q=${cityInputValue}&appid=${apiKey}`
-          // );
-
           const data = await response.json();
 
-          weatherInfo.innerHTML = `
-            <div class="weather-details">
-              <h5 class="mb-3">${data.name}</h5>
-              <img src="https://openweathermap.org/img/wn/${
-                data.weather[0].icon
-              }@2x.png" alt="Weather icon">
-              <h4>${data.main.temp.toFixed(1)}°C</h4>
-              <p class="mb-2">${data.weather[0].description}</p>
-              <div class="row mt-3">
-                <div class="col-6">
-                  <p>စိုထိုင်းဆ: ${data.main.humidity}%</p>
-                </div>
-                <div class="col-6">
-                  <p>လေတိုက်နှုန်း: ${data.wind.speed} m/s</p>
+          if (response.ok) {
+            weatherInfo.innerHTML = `
+              <div class="weather-details">
+                <h5 class="mb-3">${data.name}</h5>
+                <img src="https://openweathermap.org/img/wn/${
+                  data.weather[0].icon
+                }@2x.png" alt="Weather icon">
+                <h4>${data.main.temp.toFixed(1)}°C</h4>
+                <p class="mb-2">${data.weather[0].description}</p>
+                <div class="row mt-3">
+                  <div class="col-6">
+                    <p>စိုထိုင်းဆ: ${data.main.humidity}%</p>
+                  </div>
+                  <div class="col-6">
+                    <p>လေတိုက်နှုန်း: ${data.wind.speed} m/s</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          `;
+            `;
+          } else {
+            throw new Error(data.message);
+          }
         } catch (error) {
+          console.error("Weather API Error:", error);
           weatherInfo.innerHTML =
             '<p class="text-danger">ရာသီဥတုအချက်အလက်များ ရယူ၍မရပါ</p>';
         }
@@ -395,38 +396,40 @@
             // Success callback
             (position) => {
               const { latitude, longitude } = position.coords;
+              console.log("Location found:", latitude, longitude);
               getWeatherByCoords(latitude, longitude);
             },
             // Error callback
             (error) => {
+              console.error("Geolocation Error:", error);
               switch (error.code) {
                 case error.PERMISSION_DENIED:
                   weatherInfo.innerHTML =
-                    '<p class="text-danger">တည်နေရာခွင့်ပြုချက် ပယ်ချခံရပါသည်</p>';
+                    '<p class="text-danger">တည်နေရာခွင့်ပြုချက် ပယ်ချခံရပါသည်။ Browser settings မှ location access ကို allow လုပ်ပေးပါ။</p>';
                   break;
                 case error.POSITION_UNAVAILABLE:
                   weatherInfo.innerHTML =
-                    '<p class="text-danger">တည်နေရာအချက်အလက် မရရှိနိုင်ပါ</p>';
+                    '<p class="text-danger">တည်နေရာအချက်အလက် မရရှိနိုင်ပါ။ နောက်တစ်ကြိမ် ထပ်မံကြိုးစားပါ။</p>';
                   break;
                 case error.TIMEOUT:
                   weatherInfo.innerHTML =
-                    '<p class="text-danger">တည်နေရာတောင်းခံချက် အချိန်ကုန်ဆုံးသွားပါပြီ</p>';
+                    '<p class="text-danger">တည်နေရာတောင်းခံချက် အချိန်ကုန်ဆုံးသွားပါပြီ။ နောက်တစ်ကြိမ် ထပ်မံကြိုးစားပါ။</p>';
                   break;
                 default:
                   weatherInfo.innerHTML =
-                    '<p class="text-danger">မမျှော်လင့်ထားသော အမှားတစ်ခု ဖြစ်ပေါ်နေပါသည်</p>';
+                    '<p class="text-danger">မမျှော်လင့်ထားသော အမှားတစ်ခု ဖြစ်ပေါ်နေပါသည်။</p>';
               }
             },
             // Options
             {
               enableHighAccuracy: true,
-              timeout: 5000,
+              timeout: 10000,
               maximumAge: 0,
             }
           );
         } else {
           weatherInfo.innerHTML =
-            '<p class="text-danger">သင့်ဘရောက်ဆာသည် တည်နေရာဝန်ဆောင်မှုကို မထောက်ပံ့ပါ</p>';
+            '<p class="text-danger">သင့်ဘရောက်ဆာသည် တည်နေရာဝန်ဆောင်မှုကို မထောက်ပံ့ပါ။</p>';
         }
       }
 
