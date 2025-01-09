@@ -122,6 +122,35 @@ submitButton.addEventListener("click", () => {
 
 function showResults() {
   completedSound.play();
+
+  // Check if all answers are correct
+  if (score === quizData.length) {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
+
+    // Fire multiple confetti bursts
+    setTimeout(() => {
+      confetti({
+        particleCount: 50,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+      });
+    }, 200);
+
+    setTimeout(() => {
+      confetti({
+        particleCount: 50,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+      });
+    }, 400);
+  }
+
   document.getElementById("quiz-screen").innerHTML = `
     <div class="question">Quiz Completed!</div>
     <div id="result">သင်သည် မေးခွန်း${quizData.length} ခုတွင် ${score} မှတ် ရရှိပါသည်။</div>
