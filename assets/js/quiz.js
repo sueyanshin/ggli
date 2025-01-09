@@ -9,6 +9,7 @@ let isQuizStarted = false;
 
 const correctSound = new Audio("assets/sounds/correct.mp3");
 const wrongSound = new Audio("assets/sounds/wrong.mp3");
+const completedSound = new Audio("assets/sounds/completed.mp3");
 
 function startTimer() {
   const progressBar = document.querySelector(".progress");
@@ -120,6 +121,7 @@ submitButton.addEventListener("click", () => {
 });
 
 function showResults() {
+  completedSound.play();
   document.getElementById("quiz-screen").innerHTML = `
     <div class="question">Quiz Completed!</div>
     <div id="result">သင်သည် မေးခွန်း${quizData.length} ခုတွင် ${score} မှတ် ရရှိပါသည်။</div>
