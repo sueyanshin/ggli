@@ -262,7 +262,7 @@
                 width: 100%;
                 height: 100%;
               "
-              src="https://www.youtube.com/embed/_H_DcRweGRw?si=d7Tp3rSyjiRL-YTP"
+              src="https://www.youtube.com/embed/YOUR_VIDEO_ID_HERE"
               title="YouTube video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -433,7 +433,7 @@
             <div class="spinner-border text-light" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <p class="mt-3 text-light">ရာသီဥတုအချက်အလက်များ ရယူနေပါသည်...</p>
+            <p class="mt-3 text-light">တာသီဥတုအချက်အလက်များ ရယူနေပါသည်...</p>
           </div>
         `;
 
@@ -444,9 +444,9 @@
           const data = await response.json();
 
           if (response.ok) {
-            // <h5 class="mb-3">${data.name}</h5>
             weatherInfo.innerHTML = `
               <div class="weather-details">
+                <h5 class="mb-3">${data.name}</h5>
                 <img src="https://openweathermap.org/img/wn/${
                   data.weather[0].icon
                 }@2x.png" alt="Weather icon">
@@ -482,55 +482,11 @@
         }
       }
 
-      async function getWeatherByCoords(lat, lon) {
-        try {
-          const response = await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
-          );
-          const data = await response.json();
-          if (response.ok) {
-            getWeatherByCity(data.name);
-          } else {
-            throw new Error(data.message);
-          }
-        } catch (error) {
-          console.error("Weather API Error:", error);
-          getWeatherByCity("Naypyidaw");
-        }
-      }
-
-      function getCurrentLocation() {
-        weatherInfo.innerHTML = `
-          <div class="loading-container text-center">
-            <div class="spinner-border text-light" role="status">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-            <p class="mt-3 text-light">တည်နေရာရှာဖွေနေပါသည်...</p>
-          </div>
-        `;
-
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              const { latitude, longitude } = position.coords;
-              getWeatherByCoords(latitude, longitude);
-              console.log(latitude);
-            },
-            (error) => {
-              console.error("Geolocation Error:", error);
-              getWeatherByCity("Naypyidaw");
-            }
-          );
-        } else {
-          getWeatherByCity("Naypyidaw");
-        }
-      }
-
-      // Add city selection dropdown with current location option
+      // Add city selection dropdown
       const cities = [
-        "Naypyidaw",
         "Yangon",
         "Mandalay",
+        "Naypyidaw",
         "Bago",
         "Mawlamyine",
         "Taunggyi",
@@ -542,8 +498,7 @@
         "beforebegin",
         `
         <div class="city-selector mb-4 text-center">
-          <select class="form-select form-select-lg mx-auto" style="max-width: 300px;" onchange="handleLocationChange(this.value)">
-            <option value="current">🌍 လက်ရှိတည်နေရာ</option>
+          <select class="form-select form-select-lg mx-auto" style="max-width: 300px;" onchange="getWeatherByCity(this.value)">
             ${cities
               .map((city) => `<option value="${city}">${city}</option>`)
               .join("")}
@@ -552,16 +507,8 @@
       `
       );
 
-      function handleLocationChange(value) {
-        if (value === "current") {
-          getCurrentLocation();
-        } else {
-          getWeatherByCity(value);
-        }
-      }
-
-      // Start with current location
-      getCurrentLocation();
+      // Start with Yangon weather by default
+      getWeatherByCity("Yangon");
     </script>
   </body>
 </html>
