@@ -8,7 +8,7 @@
     />
     <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> -->
 
-    <title>GRASSROOTS TO GREATNESS: When livestock meets inovations</title>
+    <title>GRASSROOTS TO GREATNESS: When livestock meets innovations</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -176,7 +176,6 @@
         <div class="row">
           <div class="col-12">
             <nav class="main-nav">
-              <!-- ***** Logo Start ***** -->
               <a href="index.html" class="logo">
                 <img
                   src="/assets/images/logo1.png"
@@ -185,17 +184,17 @@
                   height="100px"
                 />
               </a>
-              <!-- ***** Logo End ***** -->
-              <!-- ***** Menu Start ***** -->
+              <!-- Menu -->
               <ul class="nav">
                 <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="about.html">About</a></li>
+                <div id="google_translate_element"></div>
               </ul>
-              <a class="menu-trigger">
-                <span>Menu</span>
-              </a>
-
-              <!-- ***** Menu End ***** -->
+              <div class="menu-trigger">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
             </nav>
           </div>
         </div>
@@ -211,7 +210,7 @@
               GRASSROOTS TO GREATNESS:
               <span>
                 When livestock meets <br />
-                inovations
+                innovations
               </span>
             </h2>
           </div>
@@ -454,15 +453,15 @@
                 <p class="mb-2">${data.weather[0].description}</p>
                 <div class="weather-info-row">
                   <div class="row">
-                    <div class="col-6">
+                    <div class="col-lg-6">
                       <div class="weather-info-item">
-                        <i class="fas fa-tint"></i>
+                        <i class="fas fa-tint text-success"></i>
                         <p class="mb-0">စိုထိုင်းဆ: ${data.main.humidity}%</p>
                       </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-lg-6">
                       <div class="weather-info-item">
-                        <i class="fas fa-wind"></i>
+                        <i class="fas fa-wind text-primary"></i>
                         <p class="mb-0">လေတိုက်နှုန်း: ${
                           data.wind.speed
                         } m/s</p>
@@ -562,6 +561,14 @@
 
       // Start with current location
       getCurrentLocation();
+    </script>
+
+    <script>
+      document
+        .querySelector(".menu-trigger")
+        .addEventListener("click", function () {
+          document.querySelector(".nav").classList.toggle("active");
+        });
     </script>
   </body>
 </html>

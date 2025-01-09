@@ -8,7 +8,7 @@
     />
     <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> -->
 
-    <title>GRASSROOTS TO GREATNESS: When livestock meets inovations</title>
+    <title>GRASSROOTS TO GREATNESS: When livestock meets innovations</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -31,145 +31,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
-
-    <style>
-      .card {
-        height: 100%;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: none;
-        border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-      }
-
-      .card-body {
-        padding: 1.5rem;
-      }
-
-      .card-title {
-        color: #2c3e50;
-        font-weight: 600;
-        margin-bottom: 1.2rem;
-        font-size: 1.25rem;
-      }
-
-      .list-group-item {
-        border: none;
-        padding: 0.75rem 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-      }
-
-      .list-group-item:last-child {
-        border-bottom: none;
-      }
-
-      /* Optional: Add a subtle background color to cards */
-      .card:nth-child(1) .card-body {
-        background: linear-gradient(145deg, #ffffff, #f8f9fa);
-      }
-
-      .btn-primary {
-        background-color: #2c3e50;
-        border: none;
-        padding: 15px 40px;
-        border-radius: 30px;
-        font-size: 1.1rem;
-        transition: all 0.3s ease;
-      }
-
-      .btn-primary:hover {
-        background-color: #34495e;
-        transform: translateX(5px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      }
-
-      /* quiz game */
-      #quiz-container {
-        background-color: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        width: 400px;
-      }
-
-      .question {
-        margin-bottom: 15px;
-        font-weight: bold;
-      }
-
-      .options {
-        list-style: none;
-        padding: 0;
-      }
-
-      .options li {
-        margin-bottom: 10px;
-        cursor: pointer;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        transition: background-color 0.2s;
-      }
-      .options li:hover {
-        background-color: #e0e0e0;
-      }
-
-      .options li.correct {
-        background-color: lightgreen;
-        border-color: green;
-      }
-
-      .options li.incorrect {
-        background-color: lightcoral;
-        border-color: red;
-      }
-
-      #result {
-        margin-top: 20px;
-        font-weight: bold;
-      }
-      button {
-        padding: 10px 20px;
-        background-color: #4caf50; /* Green */
-        border: none;
-        color: white;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin-top: 10px;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-
-      /* Add these styles */
-      .progress-bar {
-        width: 100%;
-        height: 10px;
-        background-color: #f0f0f0;
-        border-radius: 5px;
-        margin: 10px 0;
-        overflow: hidden;
-      }
-
-      .progress {
-        height: 100%;
-        width: 0;
-        background-color: #4caf50;
-        transition: width 5s linear;
-      }
-
-      .question-number {
-        font-size: 1.1rem;
-        color: #666;
-        margin-bottom: 10px;
-        font-weight: 500;
-      }
-    </style>
+    <link rel="stylesheet" href="assets/css/quiz.css" />
   </head>
 
   <body>
@@ -192,7 +54,6 @@
         <div class="row">
           <div class="col-12">
             <nav class="main-nav">
-              <!-- ***** Logo Start ***** -->
               <a href="index.html" class="logo">
                 <img
                   src="/assets/images/logo1.png"
@@ -201,16 +62,17 @@
                   height="100px"
                 />
               </a>
-              <!-- ***** Logo End ***** -->
-              <!-- ***** Menu Start ***** -->
+              <!-- Menu -->
               <ul class="nav">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
+                <div id="google_translate_element"></div>
               </ul>
-              <a class="menu-trigger">
-                <span>Menu</span>
-              </a>
-              <!-- ***** Menu End ***** -->
+              <div class="menu-trigger">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
             </nav>
           </div>
         </div>
@@ -307,9 +169,11 @@
       class="container d-flex justify-content-center align-items-center my-5"
     >
       <div id="quiz-container">
-        <h1 class="my-4">ဉာဏ်စမ်းဂိမ်း</h1>
+        <h1 class="my-4 text-center">💡ဉာဏ်စမ်းဂိမ်း💡</h1>
         <div id="start-screen" class="text-center">
-          <button id="start-btn" class="btn btn-primary btn-lg">စတင်မည်</button>
+          <button id="start-btn" class="btn btn-primary btn-lg mx-auto">
+            စတင်မည်
+          </button>
         </div>
         <div id="quiz-screen" style="display: none">
           <div class="progress-bar">
@@ -352,207 +216,47 @@
     <script>
       const quizData = [
         {
-          question: "တိရ စ္ဆာန်မွေးမြူခြင်း၏ အဓိကရည်ရွယ်ချက် ကား အဘယ်နည်း။",
+          question:
+            "အရင်းအမြစ်လုံလောက်စွာမရရှိမှုတွင် မည်သည့်အချက်က အဓိကပြဿနာ မဟုတ်သနည်း။",
           options: [
-            "စီးပွားဖြစ် မွေးမြူရေးလုပ်ငန်း အတွက် မွေးမြူရေး",
-            "တောင်သူလယ်သမားများအတွက် အလုပ်အကိုင်များ ပေးအပ်ခြင်း",
-            "မျိုးသုဉ်းလုနီးပါးမျိုးစိတ်များကို ကာကွယ်ခြင်း",
-            "စားနပ်ရိက္ခာဖူလုံမှုရှိစေရေး",
+            "အသိပညာပိုင်းဆိုင်ရာ လိုအပ်ချက်ရှိမှု",
+            "မွေးမြူရေးဆိုင်ရာပစ္စည်းကိရိယာတွေ စုံလင်စွာမရှိမှု",
+            "မျိုးဆက်ပြန့်ပွါးမှုအတွက် လုံလောက်တဲ့အထီးအမ အရေအတွက်မရှိမှု",
+            "ဝန်ထမ်းလစာ မြင့်မားမှု",
           ],
-          answer: "စီးပွားဖြစ် မွေးမြူရေးလုပ်ငန်း အတွက် မွေးမြူရေး",
+          answer: "ဝန်ထမ်းလစာ မြင့်မားမှု",
         },
         {
-          question:
-            "တိရစ္ဆာန်မွေးမြူခြင်းတွင် ဈေးကွက် ရရှိရေးပြဿနာများကို ဖြေရှင်း နည်းတစ်ခုကား အဘယ်နည်း။",
+          question: "ကျန်းမာရေးပြဿနာများတွင် မည်သည့်အချက်က အဓိကဖြစ်သနည်း။",
           options: [
-            "မွေးမြူရေး တိရစ္ဆာန်ဦးရေ တိုးစေခြင်း။",
-            "ပိုမိုကောင်းမွန်သော လမ်းများနှင့် လမ်းပန်းဆက်သွယ်ရေးကွန်ရက်များ တည်ဆောက်ပါ",
-            "တိရစ္ဆာန်ကျန်းမာရေးစောင့်ရှောက် မှုကုန်ကျစရိတ်ကို လျှော့ချပါ",
-            "အသေးစားဈေးကွက်များ ကိုပိတ်ပါ",
+            "တိရစ္ဆာန်ရောဂါများ ကူးစက်ပျံ့နှံ့မှု",
+            "ဆေးဝါးစျေးနှုန်းကြီးမြင့်မှု",
+            "ဆေးကုသမှုခံယူရန် ခက်ခဲမှု",
+            "ဆေးရုံဆေးခန်းများ ဝေးကွာမှု",
           ],
-          answer:
-            "ပိုမိုကောင်းမွန်သော လမ်းများနှင့် လမ်းပန်းဆက်သွယ်ရေးကွန်ရက်များ တည်ဆောက်ပါ",
+          answer: "တိရစ္ဆာန်ရောဂါများ ကူးစက်ပျံ့နှံ့မှု",
         },
         {
-          question:
-            "အခြေခံ မွေးမြူရေးသမား များ ရင်ဆိုင်နေရသော အဓိကပြဿနာမှာ အဘယ်နည်း",
+          question: "ရာသီဥတုဆိုင်ရာပြဿနာများတွင် မည်သည့်အချက်က အဓိကမဟုတ်သနည်း။",
           options: [
-            "သင့်လျော်သော စားကျက်မြေမရှိခြင်း",
-            "အရင်းအမြစ်များ များပြား ခြင်း",
-            "မိုးအလွန်အကျွံရွာခြင်း",
-            "တိရစ္ဆာန်ရောဂါများ",
+            "မိုးခေါင်ခြင်းနှင့် ရေကြီးခြင်း",
+            "အပူလွန်ကဲခြင်းပြဿနာ",
+            "ရာသီဥတုဖောက်ပြန်ခြင်း၏ မွေးမြူရေးအပေါ် သက်ရောက်မှုများ",
+            "နိုင်ငံခြားမှ တိရစ္ဆာန်များ တင်သွင်းမှု",
           ],
-          answer: "သင့်လျော်သော စားကျက်မြေမရှိခြင်း",
+          answer: "နိုင်ငံခြားမှ တိရစ္ဆာန်များ တင်သွင်းမှု",
         },
         {
-          question:
-            "အောက်ဖော်ပြပါများထဲမှ မည်သည့်အရာသည် ဒေသခံ ပြည်သူများအတွက် တိရစ္ဆာန် မွေးမြူမှု ပိုမိုကောင်းမွန် အောင် ကူညီပေးနိုင်မည်နည်း။",
+          question: "စျေးကွက်ဆိုင်ရာပြဿနာများတွင် မည်သည့်အချက်က အဓိကဖြစ်သနည်း။",
           options: [
-            "ရိုးရာနည်းများ",
-            "နည်းပညာအသစ်များ",
-            "မိုးအလွန်အကျွံရွာခြင်း",
-            "တိရစ္ဆာန်ရောဂါများ",
+            "အခြေခံအဆောက်အအုံ နည်းပါးမှု",
+            "ကုန်စျေးနှုန်းနှင့် အခွန်များ တိုးလာမှု",
+            "ခေါင်းပုံဖြတ်ခံရမှုများ",
+            "အထက်ပါအားလုံး",
           ],
-          answer: "နည်းပညာအသစ်များ",
+          answer: "အထက်ပါအားလုံး",
         },
       ];
-
-      const quizContainer = document.getElementById("quiz");
-      const resultContainer = document.getElementById("result");
-      const submitButton = document.getElementById("submit");
-
-      let currentQuestion = 0;
-      let score = 0;
-      let timer;
-      let isQuizStarted = false;
-
-      function startTimer() {
-        const progressBar = document.querySelector(".progress");
-        progressBar.style.width = "100%"; // Start at 100%
-
-        // Clear any existing timer
-        if (timer) clearTimeout(timer);
-
-        // Reset and animate to 0%
-        setTimeout(() => {
-          progressBar.style.width = "0%";
-        }, 50);
-
-        // Auto-submit after 5 seconds
-        timer = setTimeout(() => {
-          const options = document.querySelectorAll(".options li");
-          if (!options[0].classList.contains("disabled")) {
-            checkAnswer("timeout");
-          }
-        }, 5000);
-      }
-
-      function loadQuiz() {
-        if (!isQuizStarted) return;
-
-        const currentQuizData = quizData[currentQuestion];
-        const quizDiv = document.getElementById("quiz");
-        quizDiv.innerHTML = `
-          <div class="question-number">မေးခွန်း ${currentQuestion + 1}/${
-          quizData.length
-        }</div>
-          <div class="question">${currentQuizData.question}</div>
-          <ul class="options">
-            ${currentQuizData.options
-              .map((option) => `<li>${option}</li>`)
-              .join("")}
-          </ul>
-        `;
-      }
-
-      function checkAnswer(selectedAnswer) {
-        // Clear the timer when answer is selected
-        if (timer) clearTimeout(timer);
-
-        const currentQuizData = quizData[currentQuestion];
-        const options = document.querySelectorAll(".options li");
-        const correctAnswer = currentQuizData.answer;
-
-        options.forEach((option) => {
-          option.classList.add("disabled");
-          if (option.textContent === correctAnswer) {
-            option.classList.add("correct");
-          }
-          if (
-            option.textContent === selectedAnswer &&
-            selectedAnswer !== correctAnswer
-          ) {
-            option.classList.add("incorrect");
-          }
-        });
-
-        if (selectedAnswer === correctAnswer) {
-          score++;
-        }
-
-        if (currentQuestion === quizData.length - 1) {
-          setTimeout(() => {
-            showResults();
-          }, 1000);
-        } else {
-          currentQuestion++;
-          setTimeout(() => {
-            loadQuiz();
-            // Force progress bar reset
-            const progressBar = document.querySelector(".progress");
-            progressBar.style.transition = "none";
-            progressBar.style.width = "100%";
-
-            // Re-enable transition and start timer
-            setTimeout(() => {
-              progressBar.style.transition = "width 5s linear";
-              startTimer();
-            }, 50);
-          }, 1000);
-        }
-      }
-
-      // Add start button handler
-      document.getElementById("start-btn").addEventListener("click", startQuiz);
-
-      function startQuiz() {
-        isQuizStarted = true;
-        document.getElementById("start-screen").style.display = "none";
-        document.getElementById("quiz-screen").style.display = "block";
-        loadQuiz();
-        startTimer();
-      }
-
-      quizContainer.addEventListener("click", (e) => {
-        if (e.target.tagName === "LI") {
-          checkAnswer(e.target.textContent);
-        }
-      });
-
-      submitButton.addEventListener("click", () => {
-        showResults();
-      });
-
-      function showResults() {
-        document.getElementById("quiz-screen").innerHTML = `
-          <div class="question">Quiz Completed!</div>
-          <div id="result">သင်သည် မေးခွန်း${quizData.length} ခုတွင် ${score} မှတ် ရရှိပါသည်။</div>
-          <button onclick="resetQuiz()" class="btn btn-primary mt-3">ပြန်လည်စတင်မည်</button>
-        `;
-      }
-
-      function resetQuiz() {
-        currentQuestion = 0;
-        score = 0;
-        isQuizStarted = false;
-
-        // Reset the entire quiz container to its original state
-        document.getElementById("quiz-container").innerHTML = `
-          <h1 class="my-4">ဉာဏ်စမ်းဂိမ်း</h1>
-          <div id="start-screen" class="text-center">
-            <button id="start-btn" class="btn btn-primary btn-lg">စတင်မည်</button>
-          </div>
-          <div id="quiz-screen" style="display: none;">
-            <div class="progress-bar">
-              <div class="progress"></div>
-            </div>
-            <div id="quiz"></div>
-            <div id="result"></div>
-          </div>
-        `;
-
-        // Re-attach event listener to the new start button
-        document
-          .getElementById("start-btn")
-          .addEventListener("click", startQuiz);
-
-        // Re-attach click event for options
-        document.getElementById("quiz").addEventListener("click", (e) => {
-          if (e.target.tagName === "LI") {
-            checkAnswer(e.target.textContent);
-          }
-        });
-      }
     </script>
 
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -561,6 +265,7 @@
     <script src="assets/js/owl-carousel.js"></script>
     <script src="assets/js/counter.js"></script>
     <script src="assets/js/custom.js"></script>
+    <script src="assets/js/quiz.js"></script>
 
     <script src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
     <script>
