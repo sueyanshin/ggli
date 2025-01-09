@@ -12,6 +12,11 @@
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      rel="shortcut icon"
+      href="assets/images/logo1.png"
+      type="image/x-icon"
+    />
 
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="assets/css/fontawesome.css" />
@@ -202,6 +207,9 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
               </ul>
+              <a class="menu-trigger">
+                <span>Menu</span>
+              </a>
               <!-- ***** Menu End ***** -->
             </nav>
           </div>
@@ -508,7 +516,7 @@
       function showResults() {
         document.getElementById("quiz-screen").innerHTML = `
           <div class="question">Quiz Completed!</div>
-          <div id="result">သင်သည် ${quizData.length} မေးခွန်းတွင် ${score} မှတ် ရရှိပါသည်။</div>
+          <div id="result">သင်သည် မေးခွန်း${quizData.length} တွင် ${score} မှတ် ရရှိပါသည်။</div>
           <button onclick="resetQuiz()" class="btn btn-primary mt-3">ပြန်လည်စတင်မည်</button>
         `;
       }

@@ -12,6 +12,11 @@
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      rel="shortcut icon"
+      href="assets/images/logo1.png"
+      type="image/x-icon"
+    />
 
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="assets/css/fontawesome.css" />
@@ -24,6 +29,10 @@
     />
 
     <style>
+      .web-title {
+        font-size: 20px !important;
+        display: none !important;
+      }
       /* Responsive text sizes */
       .card-title {
         font-size: calc(1.1rem + 0.3vw);
@@ -43,6 +52,12 @@
 
       /* Responsive spacing */
       @media (max-width: 768px) {
+        .web-title {
+          display: block !important;
+        }
+        .main-banner .header-text h2 {
+          display: none;
+        }
         .card-body {
           padding: 1rem;
         }
@@ -94,6 +109,9 @@
                 <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="about.html">About</a></li>
               </ul>
+              <a class="menu-trigger">
+                <span>Menu</span>
+              </a>
 
               <!-- ***** Menu End ***** -->
             </nav>
@@ -119,12 +137,24 @@
       </div>
     </div>
 
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 offset-lg-4">
+          <div class="section-heading text-center">
+            <h2 class="web-title">
+              GRASSROOTS TO GREATNESS: <br />
+              <span> When livestock meets inovations </span>
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="properties section">
       <div class="container">
         <div class="row">
           <div class="col-lg-4 offset-lg-4">
             <div class="section-heading text-center">
-              <!-- <h6>| Properties</h6> -->
               <h3>လေ့လာရန် အကြောင်းအရာများ</h3>
             </div>
           </div>
