@@ -444,9 +444,9 @@
           const data = await response.json();
 
           if (response.ok) {
-            // <h5 class="mb-3">${data.name}</h5>
             weatherInfo.innerHTML = `
-              <div class="weather-details">
+            <div class="weather-details">
+              <h5 class="mb-3">${data.name}</h5>
                 <img src="https://openweathermap.org/img/wn/${
                   data.weather[0].icon
                 }@2x.png" alt="Weather icon">
