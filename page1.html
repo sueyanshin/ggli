@@ -271,11 +271,15 @@
       </div>
     </div>
 
-    <div id="quiz-container">
-      <h1 class="my-2">ဉာဏ်စမ်းဂိမ်း</h1>
-      <div id="quiz"></div>
-      <!-- <button id="submit">Submit Answers</button> -->
-      <div id="result"></div>
+    <div
+      class="container d-flex justify-content-center align-items-center my-5"
+    >
+      <div id="quiz-container">
+        <h1 class="my-4">ဉာဏ်စမ်းဂိမ်း</h1>
+        <div id="quiz"></div>
+        <!-- <button id="submit">Submit Answers</button> -->
+        <div id="result"></div>
+      </div>
     </div>
 
     <div class="container mt-5 mb-5">
@@ -348,6 +352,7 @@
         const correctAnswer = currentQuizData.answer;
 
         options.forEach((option) => {
+          option.classList.add("disabled");
           if (option.textContent === correctAnswer) {
             option.classList.add("correct");
           }
@@ -362,6 +367,15 @@
         if (selectedAnswer === correctAnswer) {
           score++;
         }
+
+        if (currentQuestion === quizData.length - 1) {
+          setTimeout(() => {
+            showResults();
+          }, 1000);
+        } else {
+          currentQuestion++;
+          setTimeout(loadQuiz, 1000);
+        }
       }
 
       loadQuiz();
@@ -369,12 +383,6 @@
       quizContainer.addEventListener("click", (e) => {
         if (e.target.tagName === "LI") {
           checkAnswer(e.target.textContent);
-          currentQuestion++;
-          if (currentQuestion < quizData.length) {
-            setTimeout(loadQuiz, 1000);
-          } else {
-            showResults();
-          }
         }
       });
 
@@ -383,9 +391,17 @@
       });
 
       function showResults() {
-        quizContainer.style.display = "none";
-        submitButton.style.display = "none";
-        resultContainer.innerHTML = `You scored ${score} out of ${quizData.length}`;
+        quizContainer.innerHTML = `
+    <div class="question">Quiz Completed!</div>
+    <div id="result">သင်သည် ${quizData.length} မေးခွန်းတွင် ${score} မှတ် ရရှိပါသည်။</div>
+    <button onclick="resetQuiz()" class="mt-3">Try Again</button>
+  `;
+      }
+
+      function resetQuiz() {
+        currentQuestion = 0;
+        score = 0;
+        loadQuiz();
       }
     </script>
 
